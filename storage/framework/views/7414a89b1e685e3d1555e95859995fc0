@@ -1,0 +1,57 @@
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+
+        </div>
+        <div class="ologo">
+            <a class="navbar-brand" href="<?php echo e(url('/')); ?>"><img src="<?php echo e(URL::to('/')); ?>/assets/img/logo.png" class="logo"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="<?php echo e(Request::is('/') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(url('/list')); ?>"><i class="fa fa-book"></i> <?php echo e(trans('greet.Library')); ?></a>
+                </li>
+                <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-language"></i> <?php echo e(trans('greet.Admin')); ?></a></li>
+                <li>
+                    <a href="<?php echo e(url('/about')); ?>"><i class="fa fa-building-o"></i><?php echo e(trans('greet.about us')); ?></a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="<?php echo e(Request::is('borrow-books') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(url('/').'/borrow-books'); ?>">
+                        <i class="fa fa-shopping-cart"></i> <span class="text-primary"><?php echo e(trans('greet.Borrow')); ?></span></a>
+                </li>
+                <?php if(Auth::guest()): ?>
+                    <li><a href="<?php echo e(url('/').'/auth/register'); ?>"><?php echo e(trans('greet.Register')); ?></a></li>
+                    <li class="<?php echo e(Request::is('auth/login') ? 'active' : ''); ?>">
+                        <a href="<?php echo e(url('/').'/auth/login'); ?>"><?php echo e(trans('greet.login')); ?></a>
+                    </li>
+                <?php else: ?>
+
+                    <li class="<?php echo e(Request::is('return-books') ? 'active' : ''); ?>">
+                        <a href="<?php echo e(url('/').'/return-books'); ?>"><i class="fa fa-keyboard-o "></i> <?php echo e(trans('greet.Return')); ?></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                         aria-expanded="false"><i class="fa fa-user text-info"></i> <?php echo e(Auth::user()->getFullName()); ?> <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                              <li class="dropdown-header"><?php echo e(trans('greet.Account')); ?></li>
+                              <li><a href="<?php echo e(url('/').'/my-profile'); ?>"><?php echo e(trans('greet.Profile')); ?></a></li>
+                              <li><a href="<?php echo e(url('/').'/change-password'); ?>"><?php echo e(trans('greet.chpass')); ?></a></li>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="<?php echo e(url('/') .'/auth/logout'); ?>"><?php echo e(trans('greet.Log out')); ?></a></li>
+                          </ul>
+                  </li>
+                <?php endif; ?>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>

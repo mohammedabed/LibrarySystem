@@ -1,0 +1,44 @@
+<?php $__env->startSection('title'); ?> <?php echo e($author->name); ?> -- Author | <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <header style="border-bottom: 1px solid #cccccc;padding-bottom: 10px;">
+                    <h2><?php echo e($author->name); ?></h2>
+                    <div class="row">
+                        <div class="col-lg-6 pull-left"><span><?php echo e($author->country); ?></span></div>
+                        <div class="col-lg-6 pull-right text-right"><?php echo e($author->dateOfBirth->format('d M, Y')); ?></div>
+                    </div>
+                </header>
+                <section>
+                    <h3><?php echo e($author->books->count()); ?> <?php echo e(trans('greet.Books')); ?></h3>
+                    <?php foreach($author->books->chunk(3) as $chunk): ?>
+                        <div class="row">
+                            <?php foreach($chunk as $chunkKey => $book): ?>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class=" well well-sm">
+                                        <h4 class="text-info">
+                                            <a href="<?php echo e(url('/').'/book/'.$book->id.'/'.str_slug($book->title)); ?>"
+                                            ><?php echo e($book->title); ?></a>
+                                        </h4>
+                                        <p><i class="fa fa-building"></i> <?php echo e($book->publisher->name); ?></p>
+                                        <?php foreach($book->categories as $cat): ?>
+                                            <label class="label label-info"><?php echo e($cat->title); ?></label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+
+                </section>
+
+            </div>
+            <div class="col-lg-3 col-md-2 hidden-sm hidden-xs">
+            </div>
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('library', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

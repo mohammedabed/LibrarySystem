@@ -1,0 +1,300 @@
+<?php $__env->startSection('title'); ?> Edit -<?php echo e($book->title); ?> - <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content-header">
+        <h1><i class="fa fa-pencil"></i> <?php echo e(trans('greet.Edit Book')); ?></h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-user"></i> Admin</a></li>
+            <li class="">
+                <a href="<?php echo e(url('/admin/book/list')); ?>"><?php echo e(trans('greet.Books')); ?></a>
+            </li>
+            <li class="">
+                <a href="<?php echo e(url('/book/').'/'.$book->id); ?>"><?php echo e($book->title); ?></a>
+            </li>
+            <li class="active">
+                Edit
+            </li>
+        </ol>
+    </section>
+
+    <section id="editBook" class="content book-form">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-book"></i> <?php echo e(trans('greet.Book Details')); ?></h3>
+                    </div>
+                    <form method="post" action="<?php echo e(url('/').'/admin/book/'. $book->id); ?>" enctype="multipart/form-data">
+                        <input type="hidden" id="token" name="_token" value="<?php echo e(csrf_token()); ?>">
+                        <input type="hidden" id="book-id" value="<?php echo e($book->id); ?>">
+
+                        <div class="box-body">
+                            <?php if(count($errors) > 0): ?>
+                                <div class="">
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            <?php foreach($errors->all() as $error): ?>
+                                                <li><?php echo e($error); ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="row">
+                                <div class="col-lg-8 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="bookTitle"><?php echo e(trans('greet.Book Title')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookTitle" placeholder="Book Title"
+                                               name="title" value="<?php echo e($book->title); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="bookEdition"><?php echo e(trans('greet.Edition')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookEdition" placeholder="Edition"
+                                               name="edition" value="<?php echo e($book->edition); ?>" maxlength="100" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+<?php /*                                        <?php echo e(isset($book->authors()->get()[0]->name) ? $book->authors()->get()[0]->name : ''); ?>*/ ?>
+                                        <label id="authorLabel1" for="bookAuthor1"><?php echo e(trans('greet.Author 1')); ?></label>
+                                        <div class="input-group">
+                                        <input type="text" class="form-control input-lg" id="bookAuthor1" placeholder="Author"
+                                               maxlength="100" data-provide="typeahead" autocomplete="off" name="author1name"
+                                               value="<?php echo e(array_key_exists(0, $book->authors()->get()->toArray()) ? $book->authors()->get()->toArray()[0]['name'] :''); ?>">
+                                        <div class = "input-group-btn">
+                                            <button class = "btn btn-lg btn-default btn-flat clear-author" value="1" type="button"
+                                                    data-toggle="tooltip" title="Clear">
+                                                <i class="text-muted fa fa-eraser"></i></button>
+                                        </div>
+                                        <input type="hidden" id="author1" name="author1"
+                                               value="<?php echo e(array_key_exists(0, $book->authors()->get()->toArray()) ? $book->authors()->get()->toArray()[0]['id'] :''); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="authorLabel2" for="bookAuthor2"><?php echo e(trans('greet.Author 2')); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-lg" id="bookAuthor2" placeholder="Author"
+                                                   maxlength="100" data-provide="typeahead" autocomplete="off" name="author2name"
+                                                   value="<?php echo e(array_key_exists(1, $book->authors()->get()->toArray()) ? $book->authors()->get()->toArray()[1]['name'] :''); ?>">
+                                            <input type="hidden" id="author2" name="author2"
+                                                   value="<?php echo e(array_key_exists(1, $book->authors()->get()->toArray()) ? $book->authors()->get()->toArray()[1]['id'] :''); ?>">
+                                            <div class = "input-group-btn">
+                                                <button class = "btn btn-lg btn-default btn-flat clear-author" value="2" type="button"
+                                                        data-toggle="tooltip" title="Clear">
+                                                    <i class="text-muted fa fa-eraser"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="authorLabel3" for="bookAuthor3"><?php echo e(trans('greet.Author 3')); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-lg" id="bookAuthor3" placeholder="Author"
+                                               maxlength="100" data-provide="typeahead" autocomplete="off" name="author3name"
+                                               value="<?php echo e(array_key_exists(2, $book->authors()->get()->toArray()) ? $book->authors()->get()->toArray()[2]['name'] :''); ?>">
+                                            <div class = "input-group-btn">
+                                              <button class = "btn btn-lg btn-default btn-flat clear-author" value="3" type="button"
+                                              data-toggle="tooltip" title="Clear">
+                                                  <i class="text-muted fa fa-eraser"></i></button>
+                                            </div>
+
+                                            <input type="hidden" id="author3" name="author3"
+                                               value="<?php echo e(array_key_exists(2, $book->authors()->get()->toArray()) ? $book->authors()->get()->toArray()[2]['id'] :''); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for="bookPublishDate"><?php echo e(trans('greet.Publish Date')); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-lg date-picker" id="bookPublishDate"
+                                                   placeholder="Publish Date" maxlength="100" name="publishDate"
+                                                   value="<?php echo e(date('d M, Y', strtotime($book->publishDate))); ?>" required>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="publiserLabel" for="bookPublisher"><?php echo e(trans('greet.Publisher')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookPublisher" placeholder="Publisher" maxlength="100" required
+                                               data-provide="typeahead" autocomplete="off"
+                                               name="publisherName" value="<?php echo e($book->publisher->name); ?>">
+                                        <input type="hidden" id="publisherId" name="publisher" value="<?php echo e($book->publisher->id); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="bookISBN10"><?php echo e(trans('greet.ISBN 10')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookISBN10" placeholder="ISBN10"
+                                               name="isbn10" value="<?php echo e($book->isbn10); ?>" maxlength="10" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="bookIsbn13"><?php echo e(trans('greet.ISBN13')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookIsbn13" placeholder="ISBN13" maxlength="13" required
+                                               name="isbn13" value="<?php echo e($book->isbn13); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="shelf"><?php echo e(trans('greet.Shelf')); ?></label>
+                                        <select class="form-control input-lg" name="shelf" id="shelf">
+                                            <?php foreach($shelfs as $shelf): ?>
+                                                <option <?php echo e($book->shelfName==$shelf ? 'SELECTED':''); ?>><?php echo e($shelf); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label><?php echo e(trans('greet.Shelf Level')); ?></label>
+                                        <select class="form-control input-lg" name="shelfLevel">
+                                            <?php foreach($shelfLevels as $level): ?>
+                                                <option <?php echo e($book->shelfRackLevel == $level ? "SELECTED" : ""); ?>><?php echo e($level); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="bookCategoryLabel1" for="bookCategory1"><?php echo e(trans('greet.Category 1')); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-lg" id="bookCategory1" required
+                                                   placeholder="Category 1" maxlength="100" name="category1name"
+                                                   data-provide="typeahead" autocomplete="off"
+                                                   value="<?php echo e(array_key_exists(0, $book->categories()->get()->toArray()) ? $book->categories()->get()->toArray()[0]['title'] :''); ?>">
+                                            <input type="hidden" id="category1" name="category1"
+                                                   value="<?php echo e(array_key_exists(0, $book->categories()->get()->toArray()) ? $book->categories()->get()->toArray()[0]['id'] :''); ?>">
+                                            <div class = "input-group-btn">
+                                                <button class = "btn btn-lg btn-default btn-flat clear-category" value="1" type="button"
+                                                        data-toggle="tooltip" title="Clear">
+                                                    <i class="text-muted fa fa-eraser"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="bookCategoryLabel2" for="bookCategory2"><?php echo e(trans('greet.Category 2')); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-lg" id="bookCategory2"
+                                                   placeholder="Category 2" maxlength="100" name="category2name"
+                                                   data-provide="typeahead" autocomplete="off"
+                                                   value="<?php echo e(array_key_exists(1, $book->categories()->get()->toArray()) ? $book->categories()->get()->toArray()[1]['title'] :''); ?>">
+
+                                            <input type="hidden" id="category2" name="category2"
+                                                   value="<?php echo e(array_key_exists(1, $book->categories()->get()->toArray()) ? $book->categories()->get()->toArray()[1]['id'] :''); ?>">
+                                            <div class = "input-group-btn">
+                                                <button class = "btn btn-lg btn-default btn-flat clear-category" value="2" type="button"
+                                                        data-toggle="tooltip" title="Clear">
+                                                    <i class="text-muted fa fa-eraser"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="bookCategoryLabel3" for="bookCategory3"><?php echo e(trans('greet.Category 3')); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-lg" id="bookCategory3"
+                                                   placeholder="Category 3" maxlength="100" name="category3name"
+                                                   data-provide="typeahead" autocomplete="off"
+                                                   value="<?php echo e(array_key_exists(2, $book->categories()->get()->toArray()) ? $book->categories()->get()->toArray()[2]['title'] : ''); ?>">
+                                            <input type="hidden" id="category3" name="category3"
+                                                   value="<?php echo e(array_key_exists(2, $book->categories()->get()->toArray()) ? $book->categories()->get()->toArray()[2]['id'] : ''); ?>">
+                                            <div class = "input-group-btn">
+                                                <button class = "btn btn-lg btn-default btn-flat clear-category" value="3" type="button"
+                                                        data-toggle="tooltip" title="Clear">
+                                                    <i class="text-muted fa fa-eraser"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <p class="">
+                                <a class="pull-left text-warning" href="<?php echo e(url('/').'/admin/book/'.$book->id.'/delete'); ?>"
+                                   title="Delete Book" data-toggle="tooltip">
+                                    <i class="fa fa-trash"></i> <?php echo e(trans('greet.Delete Book')); ?></a>
+                                <button class="pull-right btn btn-primary btn-flat" type="submit"><?php echo e(trans('greet.Save')); ?></button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <h4><i class="fa fa-copy"></i> <?php echo e(trans('greet.Books Copy')); ?>Books Copy</h4>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 text-right">
+                                <form action="<?php echo e(url('/').'/admin/book/'.$book->id.'/copy'); ?>" method="post">
+                                    <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+                                    <button type="submit" class="btn btn-default btn-sm btn-flat"><i class="fa fa-plus"></i> <?php echo e(trans('greet.Category 3')); ?>Add New Copy</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th><?php echo e(trans('greet.Book Code')); ?></th>
+                                <th><?php echo e(trans('greet.Status')); ?></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach($book->copies as $copy): ?>
+                                <tr class="<?php echo e($copy->deleted_at != null?'warning':''); ?>">
+                                    <form action="<?php echo e(url('/').'/admin/book/'.$book->id.'/copy/'.$copy->id); ?>"
+                                          method="POST">
+                                        <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+                                        <td><?php echo e($copy->bookCode); ?></td>
+                                        <td>
+                                            <select class="form-control" name="status">
+                                                <?php foreach(config('lms.bookCopyStatus') as $key=>$status): ?>
+                                                    <option <?php echo e($copy->status == $key ? 'SELECTED':''); ?> value="<?php echo e($key); ?>"
+                                                            ><?php echo e($status); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </td>
+                                        <td class="text-right">
+                                            <?php if($copy->deleted_at == null): ?>
+                                                <button class="btn btn-sm btn-flat" type="submit"><?php echo e(trans('greet.Update')); ?></button>
+                                            <?php else: ?>
+                                                <span class="text-muted"><i class="fa fa-trash-o"></i> trashed</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </form>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

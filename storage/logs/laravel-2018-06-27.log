@@ -1,0 +1,10 @@
+[2018-06-27 11:34:22] local.ERROR: exception 'InvalidArgumentException' with message 'Command "sev" is not defined.' in C:\Users\Mohamed Aabed\Downloads\library-management-system-master\library-management-system-master\vendor\symfony\console\Application.php:515
+Stack trace:
+#0 C:\Users\Mohamed Aabed\Downloads\library-management-system-master\library-management-system-master\vendor\symfony\console\Application.php(186): Symfony\Component\Console\Application->find('sev')
+#1 C:\Users\Mohamed Aabed\Downloads\library-management-system-master\library-management-system-master\vendor\symfony\console\Application.php(120): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 C:\Users\Mohamed Aabed\Downloads\library-management-system-master\library-management-system-master\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php(107): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 C:\Users\Mohamed Aabed\Downloads\library-management-system-master\library-management-system-master\artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 {main}  
+[2018-06-27 14:46:28] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected ''share.'' (T_CONSTANT_ENCAPSED_STRING), expecting ']'' in C:\Users\Mohamed Aabed\Downloads\library-management-system-master\library-management-system-master\resources\lang\en\greet.php:41
+Stack trace:
+#0 {main}  

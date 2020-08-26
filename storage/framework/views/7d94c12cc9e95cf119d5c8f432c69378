@@ -1,0 +1,105 @@
+<?php $__env->startSection('title'); ?>
+	Register -- <?php echo e($common['app']); ?>
+
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading"><?php echo e(trans ('greet.reg')); ?></div>
+				<div class="panel-body">
+					<?php if(count($errors) > 0): ?>
+						<div class="alert alert-danger">
+							<strong>Whoops!</strong> There were some problems with your input.<br><br>
+							<ul>
+								<?php foreach($errors->all() as $error): ?>
+									<li><?php echo e($error); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					<?php endif; ?>
+
+					<form class="form-vertical" role="form" method="POST" action="<?php echo e(url('/auth/register')); ?>">
+						<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label"><?php echo e(trans ('greet.fname')); ?></label>
+									<input type="text" class="form-control input-lg" name="firstName" value="<?php echo e(old('firstName')); ?>"
+										   maxlength="50" required placeholder="First Name">
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label"><?php echo e(trans ('greet.lname')); ?></label>
+									<input type="text" class="form-control input-lg" name="lastName" value="<?php echo e(old('lastName')); ?>"
+										   maxlength="50" required placeholder="Last Name">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label"><?php echo e(trans ('greet.email')); ?></label>
+									<input type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>"
+									maxlength="30" required placeholder="Email">
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-12"></div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label"><?php echo e(trans ('greet.gender')); ?></label>
+									<select class="form-control" name="gender" required>
+										<option><?php echo e(trans ('greet.mgender')); ?></option>
+										<option><?php echo e(trans ('greet.fgender')); ?></option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label"><?php echo e(trans ('greet.birth')); ?></label>
+									<input type="text" class="form-control date-picker" name="dateOfBirth"
+										   	value="<?php echo e(old('dateOfBirth')); ?>" maxlength="50" required
+											placeholder="Date Of Birth">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label"><?php echo e(trans ('greet.pass')); ?></label>
+									<input type="password" class="form-control" name="password" required maxlength="20">
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label"><?php echo e(trans ('greet.cpass')); ?></label>
+									<input type="password" class="form-control" name="password_confirmation"
+									required maxlength="20">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-lg-12 text-right">
+								<button type="submit" class="btn btn-primary">
+									<?php echo e(trans ('greet.Register')); ?>								</button>
+
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('library', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

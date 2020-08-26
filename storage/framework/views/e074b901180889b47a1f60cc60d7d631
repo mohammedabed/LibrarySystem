@@ -1,0 +1,77 @@
+<?php $__env->startSection('title'); ?> Author List -- <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content-header">
+        <h1><i class="fa fa-book"></i> <?php echo e(trans('greet.Authors')); ?> <small><?php echo e(trans('greet.Author List')); ?></small></h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-user"></i> Admin</a></li>
+            <li class="active">
+                <a href="<?php echo e(url('author')); ?>"><?php echo e(trans('greet.Authors')); ?></a>
+            </li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <input type="hidden" id="page_token" value="<?php echo e(csrf_token()); ?>">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><?php echo e(trans('greet.Author List')); ?></h3>
+                        <p class='pull-right'>
+                        <p class='pull-right'>
+                            <a href="<?php echo e(url('/').'/admin/author/add-new'); ?>" class="btn btn-xs btn-info">
+                                <i class="fa fa-plus"></i> <?php echo e(trans('greet.Add New')); ?></a>
+                        </p>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <th><?php echo e(trans('greet.Name')); ?></th>
+                                    <th><?php echo e(trans('greet.gender')); ?></th>
+                                    <th><?php echo e(trans('greet.birth')); ?></th>
+                                    <th><?php echo e(trans('greet.Country')); ?></th>
+                                    <th>...</th>
+                                </thead>
+                                <tbody>
+                                <?php foreach($authors as $author): ?>
+                                    <tr>
+                                        <td><?php echo e($author->name); ?></td>
+                                        <td>
+                                            <?php echo e($author->gender); ?>
+
+                                        </td>
+                                        <td>
+                                            <?php if(isset($author->dateOfBirth)): ?>
+                                                <small class="text-muted"><?php echo e($author->dateOfBirth->format('M')); ?></small>
+                                                <?php echo e($author->dateOfBirth->format('Y')); ?>
+
+                                            <?php endif; ?>
+                                        </td>
+
+                                        <td> <?php echo e($author->country); ?></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="<?php echo e(url('/admin').'/author/'.$author->id.'/edit'); ?>" class="btn btn-link" >
+                                                    <i class="fa fa-pencil"></i></a>
+                                                <button class="btn btn-link"  data-toggle="modal" data-target="#deleteMember">
+                                                    <i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="box-footer text-center">
+                        <p class="text-center"><?php echo $authors->render(); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

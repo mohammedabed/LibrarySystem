@@ -1,0 +1,128 @@
+<?php $__env->startSection('title'); ?> Add New Member - <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content-header">
+        <h1><i class="fa fa-plus"></i> <?php echo e(trans('greet.Add New Member')); ?></h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-user"></i> Admin</a></li>
+            <li class="">
+                <a href="<?php echo e(url('/admin/member/list')); ?>"><?php echo e(trans('greet.Member')); ?></a>
+            </li>
+            <li class="active">
+                <?php echo e(trans('greet.Add New')); ?>
+
+            </li>
+        </ol>
+    </section>
+
+    <section id="createBook" class="content book-form">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-sm-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                    <h3 class="box-title"><?php echo e(trans('greet.Member Details')); ?></h3>
+                    </div>
+                    <form method="post" action="<?php echo e(url('/').'/admin/member'); ?>" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                        <div class="box-body">
+                            <?php if(count($errors) > 0): ?>
+                                <div class="">
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            <?php foreach($errors->all() as $error): ?>
+                                                <li><?php echo e($error); ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="mFirstName"><?php echo e(trans('greet.fname')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="mFirstName" placeholder="First Name"
+                                               name="firstName" value="<?php echo e(old('firstName')); ?>" maxlength="50" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="mLastName"><?php echo e(trans('greet.lname')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="mLastName" placeholder="Last Name"
+                                               name="lastName" value="<?php echo e(old('lastName')); ?>" maxlength="50" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="form-group">
+                                        <label for=""><?php echo e(trans('greet.Type')); ?></label>
+                                        <select required class="form-control input-lg" name="type">
+                                            <option><?php echo e(trans('greet.Member')); ?></option>
+                                            <option><?php echo e(trans('greet.Admin')); ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="mGender"><?php echo e(trans('greet.gender')); ?></label>
+                                        <select required class="form-control input-lg" name="gender" id="mGender">
+                                            <option><?php echo e(trans('greet.mgender')); ?></option>
+                                            <option><?php echo e(trans('greet.fgender')); ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for="mDOB"><?php echo e(trans('greet.birth')); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-lg date-picker" id="mDOB"
+                                                   placeholder="Date of Birth" maxlength="30" name="dateOfBirth"
+                                                   value="<?php echo e(old('dateOfBirth')); ?>" required>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-8 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                    <label for="mTitle"><?php echo e(trans('greet.ptitle')); ?></label>
+                                    <input type="text" class="form-control input-lg" id="mTitle" placeholder="Profile Title" maxlength="100"
+                                           autocomplete="off" name="profileTitle" value="<?php echo e(old('profileTitle')); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for="mEmail"><?php echo e(trans('greet.email')); ?></label>
+                                        <input type="email" class="form-control input-lg" id="mEmail"
+                                               placeholder="Email" maxlength="50" name="email" required >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for=""><?php echo e(trans('greet.pass')); ?></label>
+                                        <p class="form-control input-lg">
+                                            <span class="text-warning"><i class="fa fa-warning"></i> <?php echo e(trans('greet.Email Address will be used as initial password.')); ?></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box-footer">
+                            <p class="text-right">
+                                <button class="btn btn-primary btn-flat" type="submit"><?php echo e(trans('greet.Save')); ?>Save</button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

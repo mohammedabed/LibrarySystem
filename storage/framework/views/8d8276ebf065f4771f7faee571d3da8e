@@ -1,0 +1,201 @@
+<?php $__env->startSection('title'); ?> Add New Book -- <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content-header">
+        <h1><i class="fa fa-plus"></i> <?php echo e(trans('greet.Add New Book')); ?></h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-user"></i> Admin</a></li>
+            <li class="">
+                <a href="<?php echo e(url('/admin/book/list')); ?>"><?php echo e(trans('greet.Books')); ?></a>
+            </li>
+            <li class="active">
+                <?php echo e(trans('greet.Add New Book')); ?>  Add New
+            </li>
+        </ol>
+    </section>
+
+    <section id="createBook" class="content book-form">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                    <h3 class="box-title"><?php echo e(trans('greet.Book Details')); ?></h3>
+                    </div>
+                    <form method="post" action="<?php echo e(url('/').'/admin/book'); ?>" enctype="multipart/form-data">
+                  <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                        <div class="box-body">
+                            <?php if(count($errors) > 0): ?>
+                                <div class="">
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            <?php foreach($errors->all() as $error): ?>
+                                                <li><?php echo e($error); ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="row">
+                                <div class="col-lg-8 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="bookTitle"><?php echo e(trans('greet.Book Title')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookTitle" placeholder="<?php echo e(trans('greet.Book Title')); ?>"
+                                               name="title" value="<?php echo e(old('title')); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="bookEdition"><?php echo e(trans('greet.Edition')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookEdition" placeholder="<?php echo e(trans('greet.Edition')); ?>"
+                                               name="edition" value="<?php echo e(old('edition')); ?>" maxlength="100" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="authorLabel1" for="bookAuthor1"><?php echo e(trans('greet.Author 1')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookAuthor1" placeholder="<?php echo e(trans('greet.Author 1')); ?>"
+                                               maxlength="100" data-provide="typeahead" autocomplete="off" name="author1name"
+                                        value="<?php echo e(old('author1name')); ?>">
+                                        <input type="hidden" id="author1" name="author1" value="<?php echo e(old('author1')); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="authorLabel2" for="bookAuthor2"><?php echo e(trans('greet.Author 2')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookAuthor2" placeholder="<?php echo e(trans('greet.Author 2')); ?>"
+                                               maxlength="100" data-provide="typeahead" autocomplete="off" name="author2name"
+                                               value="<?php echo e(old('author2name')); ?>">
+                                        <input type="hidden" id="author2" name="author2" value="<?php echo e(old('author2')); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="authorLabel3" for="bookAuthor3"><?php echo e(trans('greet.Author 3')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookAuthor3" placeholder="<?php echo e(trans('greet.Author 3')); ?>"
+                                               maxlength="100" data-provide="typeahead" autocomplete="off" name="author3name"
+                                               value="<?php echo e(old('author3name')); ?>">
+                                        <input type="hidden" id="author3" name="author3" value="<?php echo e(old('author2')); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for="bookPublishDate"><?php echo e(trans('greet.Publish Date')); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-lg date-picker" id="bookPublishDate"
+                                                   placeholder="Publish Date" maxlength="100" name="publishDate"
+                                                   value="<?php echo e(old('publishDate')); ?>" required>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                    <label id="publiserLabel" for="bookPublisher"><?php echo e(trans('greet.Publisher')); ?></label>
+                                    <input type="text" class="form-control input-lg" id="bookPublisher" placeholder="<?php echo e(trans('greet.Publisher')); ?>" maxlength="100" required
+                                           data-provide="typeahead" autocomplete="off"
+                                           name="publisherName" value="<?php echo e(old('publisherName')); ?>">
+                                    <input type="hidden" id="publisherId" name="publisher" value="<?php echo e(old('publisher')); ?>">
+                                </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for="bookCopy"><?php echo e(trans('greet.Quantity (Copy)')); ?></label>
+
+                                        <input type="number" class="form-control input-lg" id="bookCopy"
+                                               placeholder="Number of Copy" maxlength="2" name="copy"
+                                               value="1" required >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="bookISBN10"><?php echo e(trans('greet.ISBN 10')); ?></label>
+                                    <input type="text" class="form-control input-lg" id="bookISBN10" placeholder="ISBN10"
+                                           name="isbn10" value="<?php echo e(old('isbn10')); ?>" maxlength="10" required>
+                                </div>
+                            </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="bookIsbn13"><?php echo e(trans('greet.ISBN13')); ?></label>
+                                    <input type="text" class="form-control input-lg" id="bookIsbn13" placeholder="ISBN13" maxlength="13" required
+                                    name="isbn13" value="<?php echo e(old('isbn13')); ?>">
+                                </div>
+                            </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="bookISBN10"><?php echo e(trans('greet.Shelf')); ?></label>
+                                        <select class="form-control input-lg" name="shelf">
+                                            <?php foreach($shelfs as $shelf): ?>
+                                                <option><?php echo e($shelf); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="bookIsbn13"><?php echo e(trans('greet.Shelf Level')); ?></label>
+                                        <select class="form-control input-lg" name="shelfLevel">
+                                            <?php foreach($shelfLevels as $level): ?>
+                                                <option><?php echo e($level); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="bookCategoryLabel1" for="bookCategory1"><?php echo e(trans('greet.Category 1')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookCategory1" required
+                                               placeholder="<?php echo e(trans('greet.Category 1')); ?>" maxlength="100" name="category1name"
+                                               data-provide="typeahead" autocomplete="off" value="<?php echo e(old('category1name')); ?>">
+                                        <input type="hidden" id="category1" name="category1" value="<?php echo e(old('category1')); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="bookCategoryLabel2" for="bookCategory2"><?php echo e(trans('greet.Category 2')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookCategory2"
+                                               placeholder="<?php echo e(trans('greet.Category 2')); ?>" maxlength="100" name="category2name"
+                                               data-provide="typeahead" autocomplete="off" value="<?php echo e(old('category2name')); ?>">
+                                        <input type="hidden" id="category2" name="category2" value="<?php echo e(old('category2')); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="bookCategoryLabel3" for="bookCategory3"><?php echo e(trans('greet.Category 3')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="bookCategory3"
+                                               placeholder="<?php echo e(trans('greet.Category 3')); ?>" maxlength="100" name="category3name"
+                                               data-provide="typeahead" autocomplete="off" value="<?php echo e(old('category3name')); ?>">
+                                        <input type="hidden" id="category3" name="category3" value="<?php echo e(old('category3')); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="thumbnail" >img</label>
+                                        <input type="file" class="form-control input-lg" id="thumbnail" value="thumbnail" name="thumbnail">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <p class="text-right">
+                                <button class="btn btn-primary btn-flat" type="submit"><?php echo e(trans('greet.Save')); ?></button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

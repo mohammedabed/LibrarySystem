@@ -1,0 +1,78 @@
+<?php $__env->startSection('title'); ?> Book List -- <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+
+    <section class="content">
+        <input type="hidden" id="page_token" value="<?php echo e(csrf_token()); ?>">
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="box">
+                    <div class="box-header with-border"><h3 class="box-title"><?php echo e(trans('greet.b')); ?></h3></div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <th> <?php echo e(trans('greet.Cover')); ?></th>
+                                <th> <?php echo e(trans('greet.Title')); ?></th>
+                                <th> <?php echo e(trans('greet.Authors')); ?></th>
+                                <th> <?php echo e(trans('greet.Publisher')); ?></th>
+                                <th> <?php echo e(trans('greet.Publish Date')); ?></th>
+                                <th> <?php echo e(trans('greet.Category')); ?></th>
+                                <th> <?php echo e(trans('greet.Shelf')); ?></th>
+                                <th> <?php echo e(trans('greet.Added')); ?></th>
+
+                                </thead>
+                                <tbody>
+                                <?php foreach($books as $book): ?>
+                                    <tr>
+                                        <td>
+                                            <img src="http://placehold.it/50x70" class="thumbnail"
+                                                 alt="<?php echo e($book->title); ?>">
+                                        </td>
+                                        <td>
+                                            <p><a href="<?php echo e(url('/book').'/'.$book->id.'/'.str_slug($book->title)); ?>"
+                                                  title="<?php echo e($book->title); ?>" data-toggle="tooltip">
+                                                <?php echo e($book->title); ?></a> <small> - <?php echo e($book->edition); ?>
+
+                                                <span class="text-muted"> (<?php echo e($book->copies()->count()); ?>)</span></small>
+                                            </p>
+                                            <p>
+                                                <small><span class="text-muted">ISBN 10:</span> <?php echo e($book->isbn10); ?></small><br>
+                                                <small><span class="text-muted">ISBN 13:</span> <?php echo e($book->isbn13); ?></small>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <?php foreach($book->authors as $author): ?>
+                                                <a href="<?php echo e(url('/').'/author/'.$author->id.'/'.str_slug($author->name)); ?>">
+                                                    <i class="fa fa-user text-muted"></i> <?php echo e($author->name); ?><br></a>
+                                            <?php endforeach; ?>
+                                        </td>
+                                        <td><?php echo e($book->publisher->name); ?></td>
+                                        <td><small class="text-muted"><?php echo e(date('d M', strtotime($book->publishDate))); ?></small>
+                                            <?php echo e(date('Y', strtotime($book->publishDate))); ?>
+
+                                        </td>
+                                        <td>
+                                            <?php foreach($book->categories as $category): ?>
+                                                <label class="label label-info"><?php echo e($category->title); ?></label>
+                                            <?php endforeach; ?>
+                                        </td>
+                                        <td><?php echo e($book->shelfName); ?></td>
+                                        <td><?php echo e($book->created_at->diffForHumans()); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <p><?php echo $books->render(); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('library', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

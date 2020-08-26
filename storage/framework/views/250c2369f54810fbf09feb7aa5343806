@@ -1,0 +1,94 @@
+<?php $__env->startSection('title'); ?> Balance Quantity Report -- <?php echo e($common['appTitle']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content-header">
+        <h1><i class="fa fa-pie-chart"></i> <?php echo e(trans('greet.Balance Report')); ?>
+
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-user"></i> Admin</a></li>
+            <li class="">
+                <a href="<?php echo e(url('/admin/report')); ?>">Report</a>
+            </li>
+            <li class="active">
+                Loan
+            </li>
+        </ol>
+    </section>
+
+    <section class="content report report-loan">
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12">
+                <div id="printableArea" class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><?php echo e(trans('greet.Book Balance Quantity Report')); ?></h3>
+                            <span class="pull-right"><button class="btn btn-default btn-print" type="button"
+                                                             onclick="printDiv('printableArea')">
+                                <i class="fa fa-print"></i> Print</button></span>
+                    </div>
+                    <div class="box-body">
+                        <?php if(isset($books)): ?>
+                            <div class="table-responsive">
+
+                                <?php foreach($books->groupBy('shelfName') as $key => $shelf): ?>
+                                    <h2>
+                                        <span class="text-left"><small class="text-muted"><?php echo e(trans('greet.Shelf')); ?>: </small><?php echo e($key); ?></span>
+                                    </h2>
+
+                                    <?php foreach($shelf->groupBy('shelfRackLevel') as $rackKey => $rackBooks): ?>
+                                        <h3><small class="text-muted"><?php echo e(trans('greet.rack')); ?>:</small> <?php echo e($rackKey); ?></h3>
+                                        <table class="table table-condensed table-striped">
+                                            <thead>
+                                                <tr>
+                                                <th><?php echo e(trans('greet.Book Code')); ?></th>
+                                                <th><?php echo e(trans('greet.Book Title')); ?></th>
+                                                <th><?php echo e(trans('greet.Status')); ?></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach($rackBooks as $book): ?>
+                                                    <?php foreach($book->copies as $copy): ?>
+                                                        <tr class="<?php echo e($copy->status == '0'?'warning':''); ?>">
+                                                        <td><?php echo e($copy->bookCode); ?></td>
+                                                        <td><?php echo e($book->title); ?> - <small><?php echo e($book->edition); ?></small></td>
+                                                        <td> <?php if($copy->status == '1'): ?>
+                                                                <?php echo e(trans('greet.Available')); ?>
+
+                                                            <?php elseif($copy->status == '0'): ?>
+                                                                <?php echo e(trans('greet.On Loan')); ?>
+
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                    <?php endforeach; ?>
+
+                                                <?php endforeach; ?>
+                                            </tbody>
+
+                                        </table>
+
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
+
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="box-footer">
+<?php /*                        <p class="text-center"><?php echo $books->render(); ?></p>*/ ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+        function printDiv ( divName ) {
+            var printContents       = document.getElementById(divName).innerHTML;
+            var originalContents    = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

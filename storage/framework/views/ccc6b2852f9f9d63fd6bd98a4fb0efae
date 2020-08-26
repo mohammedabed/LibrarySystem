@@ -1,0 +1,100 @@
+<?php $__env->startSection('title'); ?> Delete -<?php echo e($book->title); ?> Book | <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content-header">
+        <h1><i class="fa fa-trash"></i> Delete Book</h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-user"></i> Admin</a></li>
+            <li class="">
+                <a href="<?php echo e(url('/admin/book/list')); ?>">Books</a>
+            </li>
+            <li class="">
+                <a href="<?php echo e(url('/book/').'/'.$book->id.'/'.str_slug($book->title)); ?>"><?php echo e($book->title); ?></a>
+            </li>
+            <li class="active">
+                Delete
+            </li>
+        </ol>
+    </section>
+
+    <section id="editBook" class="content book-form">
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12">
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <div class="row">
+                            <div class="col-lg-10 col-sm-10">
+                                <h3 class="box-title"><i class="fa fa-book"></i> <span
+                                            class="text-danger"><?php echo e($book->title); ?></span>
+                                </h3>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 text-right">
+                                <?php if(Input::has('trashed')): ?>
+                                    <a href="<?php echo e(url('/').'/admin/book/'.$book->id.'/delete'); ?>"><i
+                                                class="fa fa-eye-slash"></i> Hide Trashed</a>
+                                <?php else: ?>
+                                    <a href="<?php echo e(url('/').'/admin/book/'.$book->id.'/delete?trashed=true'); ?>">
+                                        <i class="fa fa-eye"></i> Show Trashed
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Book Code</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach($book->copies as $copy): ?>
+                                <tr class="<?php echo e($copy->deleted_at != null?'warning':''); ?>">
+                                    <form action="<?php echo e(url('/').'/admin/book/'.$book->id.'/copy/'.$copy->id); ?>"
+                                          method="POST">
+                                        <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+                                        <input name="_method" type="hidden" value="DELETE">
+                                        <td><?php echo e($copy->bookCode); ?></td>
+                                        <td><?php echo e($copy->status); ?></td>
+                                        <td class="text-right">
+                                            <?php if($copy->deleted_at == null): ?>
+                                                <button class="btn-remove-book-copy btn btn-warning btn-sm"
+                                                        type="submit">
+                                                    Delete
+                                                </button>
+                                            <?php else: ?>
+                                                <span class="text-muted"><i class="fa fa-trash-o"></i> trashed</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </form>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="box-footer">
+                        <p class="">
+                            <form action="<?php echo e(url('/').'/admin/book/'.$book->id); ?>" method="post">
+                                <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>"/>
+                                <input name="_method" type="hidden" value="DELETE">
+                                <span class="pull-left text-danger text-right">
+                                    <strong>Delete all copy including the book book</strong>
+                                </span>
+                                <button class="pull-right btn btn-danger btn-sm" type="submit">Delete</button>
+                            </form>
+
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

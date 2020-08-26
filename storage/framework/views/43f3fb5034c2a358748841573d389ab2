@@ -1,0 +1,106 @@
+<?php $__env->startSection('title'); ?> Book List -- <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content-header">
+        <h1><i class="fa fa-book"></i><?php echo e(trans('greet.Books')); ?>  <small><?php echo e(trans('greet.Book List')); ?></small></h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-user"></i> Admin</a></li>
+            <li class="active">
+                <a href="<?php echo e(url('/admin/book/list')); ?>"><?php echo e(trans('greet.Book')); ?></a>
+            </li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <input type="hidden" id="page_token" value="<?php echo e(csrf_token()); ?>">
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><?php echo e(trans('greet.Book List')); ?></h3>
+                        <p class='pull-right'>
+                            <a href="<?php echo e(url('/').'/admin/book/add-new'); ?>" class="btn btn-xs btn-info">
+                                <i class="fa fa-plus"></i> <?php echo e(trans('greet.Add New')); ?></a>
+                        </p>
+                    </div>
+                    <div class="box-body">
+
+                        <?php if(Session::has('deleteStatus')): ?>
+                            <div class="alert alert-warning">
+                                <p><i class="fa fa-warning"></i> <?php echo e(Session::get('deleteStatus')); ?></p>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <th><?php echo e(trans('greet.Cover')); ?></th>
+                                    <th><?php echo e(trans('greet.Title')); ?></th>
+                                    <th><?php echo e(trans('greet.ISBN')); ?></th>
+                                    <th><?php echo e(trans('greet.Authors')); ?></th>
+                                    <th><?php echo e(trans('greet.Publisher')); ?></th>
+                                    <th><?php echo e(trans('greet.Publish Date')); ?></th>
+                                    <th><?php echo e(trans('greet.Category')); ?></th>
+                                    <th><?php echo e(trans('greet.Shelf')); ?></th>
+                                    <th><?php echo e(trans('greet.Added')); ?></th>
+                                    <th>...</th>
+                                </thead>
+                                <tbody>
+                                <?php foreach($books as $book): ?>
+                                    <tr>
+                                        <td>
+                                            <img src="<?php echo e(route('book.img',[])); ?>" class="img-responsive"
+                                             class="thumbnail"
+                                                 alt="<?php echo e($book->title); ?>">
+                                        </td>
+                                        <td>
+                                            <a href="<?php echo e(url('/book').'/'.$book->id.'/'.str_slug($book->title)); ?>" title="<?php echo e($book->title); ?>"
+                                            ><?php echo e($book->title); ?></a> <span class="text-muted">(<?php echo e($book->copies()->count()); ?>)</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted">ISBN 10:</span> <?php echo e($book->isbn10); ?><br>
+                                            <span class="text-muted">ISBN 13:</span> <?php echo e($book->isbn13); ?>
+
+                                        </td>
+                                        <td>
+                                            <?php foreach($book->authors as $author): ?>
+                                                <?php echo e($author->name); ?><br>
+                                            <?php endforeach; ?>
+                                        </td>
+                                        <td><?php echo e($book->publisher->name); ?></td>
+                                        <td><small class="text-muted"><?php echo e(date('d M', strtotime($book->publishDate))); ?></small>
+                                            <?php echo e(date('Y', strtotime($book->publishDate))); ?>
+
+                                        </td>
+                                        <td>
+                                            <?php foreach($book->categories as $category): ?>
+                                                <?php echo e($category->title); ?><br>
+                                            <?php endforeach; ?>
+                                        </td>
+                                        <td><?php echo e($book->shelfName); ?></td>
+                                        <td><?php echo e($book->created_at->diffForHumans()); ?></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="<?php echo e(url('/admin/').'/book/'.$book->id.'/edit'); ?>" class="btn btn-link" >
+                                                    <i class="fa fa-pencil"></i></a>
+                                                <a href="<?php echo e(url('/admin').'/book/'.$book->id.'/delete'); ?>" class="btn btn-link">
+                                                    <i class="fa fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <p><?php echo $books->render(); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

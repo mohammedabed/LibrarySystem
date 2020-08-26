@@ -1,0 +1,132 @@
+<?php $__env->startSection('title'); ?> Loan Report -- <?php echo e($common['appTitle']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content-header">
+        <h1><i class="fa fa-pie-chart"></i> <?php echo e(trans('greet.Loan')); ?> Report <small></small></h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-user"></i> Admin</a></li>
+            <li class="">
+                <a href="<?php echo e(url('/admin/report')); ?>"><?php echo e(trans('greet.Report')); ?></a>
+            </li>
+            <li class="active">
+                Loan
+            </li>
+        </ol>
+    </section>
+
+    <section class="content report report-loan">
+        <input type="hidden" id="page_token" value="<?php echo e(csrf_token()); ?>">
+        <div class="row">
+            <form action="<?php echo e(url('/admin/report/loan')); ?>">
+            <div class="col-lg-offset-2 col-lg-4 col-md-8 col-sm-12">
+                <div class="form-group">
+                    <label><h4>Select Date</h4></label>
+                    <div class="input-daterange input-group" id="datepicker">
+                        <input type="text" class="form-control date-picker" name="start"
+                               id="loan-from-date" placeholder="From" value="<?php echo e(Input::get('start')); ?>" required/>
+                        <span class="input-group-addon">to</span>
+                        <input type="text" class="form-control date-picker" name="end"
+                               to="loan-to-date" placeholder="To" value="<?php echo e(Input::get('end')); ?>" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="form-group">
+                    <label><h4>Get Report</h4></label><br/>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12">
+                <div id="printableArea" class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Book Loan Report from <?php echo e(Input::get('start')); ?> to <?php echo e(Input::get('end')); ?></h3>
+                        <?php if(isset($reservations)): ?>
+                            <span class="pull-right"><button class="btn btn-default btn-print" type="button"
+                                                         onclick="printDiv('printableArea')">
+                                <i class="fa fa-print"></i> Print</button></span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="box-body">
+                        <?php if(isset($reservations)): ?>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-aqua"><i class="fa fa-shopping-cart"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"><?php echo e(trans('greet.Reservations')); ?></span>
+                                            <span class="info-box-number"><?php echo e($reservations->count()); ?><small></small></span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-blue"><i class="fa fa-user"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"><?php echo e(trans('greet.Members')); ?></span>
+                                            <span class="info-box-number"><?php echo e($reservations->unique('member_id')->count()); ?></span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        <?php endif; ?>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th><?php echo e(trans('greet.Time')); ?></th>
+                                    <th><?php echo e(trans('greet.Member')); ?></th>
+                                    <th><?php echo e(trans('greet.Book')); ?></th>
+                                    <th><?php echo e(trans('greet.Book Code')); ?></th>
+                                    <th><?php echo e(trans('greet.Due Date')); ?></th>
+                                    <th><?php echo e(trans('greet.Return Date')); ?></th>
+                                    <th><?php echo e(trans('greet.Fine')); ?></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                    <?php foreach($reservations as $reservation): ?>
+                                        <tr>
+                                    <td><?php echo e($reservation->id); ?></td>
+                                    <td><?php echo e($reservation->created_at->format('d M, Y h:i A')); ?></td>
+                                    <td><?php echo e($reservation->member->getFullName()); ?></td>
+                                    <td><?php echo e($reservation->bookCopy->book->title); ?> -
+                                        <small><?php echo e($reservation->bookCopy->book->edition); ?></small></td>
+                                    <td><?php echo e($reservation->bookCopy->bookCode); ?></td>
+                                    <td><?php echo e($reservation->dueDate->format('d M, Y')); ?></td>
+                                            <td><?php echo e($reservation->returnDate->format('d M, Y h:i A')); ?></td>
+
+                                            <td><?php echo e($reservation->fine); ?></td>
+
+
+                                        </tr>
+                                    <?php endforeach; ?>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

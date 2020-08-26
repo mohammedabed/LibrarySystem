@@ -1,0 +1,70 @@
+<?php $__env->startSection('title'); ?> <?php echo e($book->title); ?> -- Book | <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <header style="border-bottom: 1px solid #cccccc;padding-bottom: 10px;">
+                    <h2><?php echo e($book->title); ?></h2>
+                    <div class="row">
+                        <div class="col-lg-6 pull-left"><span><?php echo e($book->edition); ?></span></div>
+                        <div class="col-lg-6 pull-right text-right">
+                            <i class="fa fa-tags"></i>
+                            <?php foreach($book->categories as $category): ?>
+                                <a href="#"><span class="label label-info"><?php echo e($category->title); ?></span></a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </header>
+                <section>
+                    <table class="table">
+                        <tbody>
+
+                        <tr>
+                            <td><i class="fa fa-user"></i> <?php echo e(trans('greet.Authors')); ?></td>
+                            <td>
+                                <?php foreach($book->authors as $author): ?>
+                                    <a href="<?php echo e(url('/').'/author/'.$author->id.'/'.str_slug($author->name)); ?>"
+                                    ><?php echo e($author->name); ?></a><br/>
+                                <?php endforeach; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-copy"></i> <?php echo e(trans('greet.Copy code')); ?></td>
+                            <td>
+                                <?php foreach($book->copies as $copy): ?>
+                                    <p><?php echo e($copy->bookCode); ?>
+
+                                        <small class="text-muted">[ <?php echo e($copy->status); ?> ]</small>
+                                    </p>
+                                <?php endforeach; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-building-o"></i> <?php echo e(trans('greet.Publisher')); ?></td>
+                            <td>
+                                <?php echo e($book->publisher->name); ?>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-info"></i> Other Info</td>
+                            <td>
+                                <small class="text-muted"><?php echo e(trans('greet.Published:')); ?></small><?php echo e($book->publishDate->format('d M, Y')); ?>
+
+                                <br/><br/>
+                                <small class="text-muted"><?php echo e(trans('greet.ISBN 10')); ?>:</small><?php echo e($book->isbn10); ?><br/>
+                                <small class="text-muted"><?php echo e(trans('greet.ISBN 13')); ?>:</small><?php echo e($book->isbn13); ?>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            <div class="col-lg-3 col-md-2 text-right">
+            </div>
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('library', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

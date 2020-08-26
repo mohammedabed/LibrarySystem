@@ -1,0 +1,126 @@
+<?php $__env->startSection('title'); ?> Edit Publisher -- <?php echo e($common['appShort']); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection("content"); ?>
+    <section class="content-header">
+        <h1><i class="fa fa-pencil"></i> <?php echo e(trans('greet.Edit Publisher')); ?></h1>
+        <ol class="breadcrumb">
+            <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-user"></i> Admin</a></li>
+            <li class="">
+                <a href="<?php echo e(url('/admin/publisher/list')); ?>"><?php echo e(trans('greet.Publisher List')); ?></a>
+            </li>
+            <li class="">
+                <a href="<?php echo e(url('/publisher/' .  $publisher->id . '/'.str_slug($publisher->name))); ?>"><?php echo e($publisher->name); ?></a>
+            </li>
+            <li class="active">
+                <?php echo e(trans('greet.Edit')); ?>
+
+            </li>
+        </ol>
+    </section>
+
+    <section id="createBook" class="content publisher-form">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-sm-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><?php echo e(trans('greet.Publisher Details')); ?></h3>
+                    </div>
+                    <form method="post" action="<?php echo e(url('/').'/admin/publisher/'.$publisher->id); ?>" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+                        <input type="hidden" name="publisherId" id="publisherId" value="<?php echo e($publisher->id); ?>">
+
+                        <div class="box-body">
+                            <?php if(count($errors) > 0): ?>
+                                <div class="">
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            <?php foreach($errors->all() as $error): ?>
+                                                <li><?php echo e($error); ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="row">
+                                <div class="col-lg-10 col-md-10 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="mName"><?php echo e(trans('greet.Name')); ?></label>
+                                        <input type="text" class="form-control input-lg" id="mName" placeholder="Name"
+                                               name="name" value="<?php echo e($publisher->name); ?>" maxlength="100" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for="pEstablishYear"><?php echo e(trans('greet.Establish year')); ?></label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control input-lg" id="pEstablishYear"
+                                                   placeholder="e.g. 1984" maxlength="4" name="establishYear"
+                                                   value="<?php echo e($publisher->establishYear); ?>">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="aCountry"><?php echo e(trans('greet.Country')); ?></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-lg" id="aCountry" placeholder="Loading Country"
+                                               data-provide="typeahead" autocomplete="off" disabled="disabled"
+                                               name="country" value="<?php echo e($publisher->country); ?>" maxlength="100" required>
+                                            <span class="input-group-addon"><i id="faCountry" class="fa fa-spinner fa-pulse"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for="pPhone"><?php echo e(trans('greet.Phone')); ?></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                            <input type="text" class="form-control input-lg" id="pPhone"
+                                                   value="<?php echo e($publisher->phone); ?>" placeholder="Phone" maxlength="20" name="phone" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for="aEmail"><?php echo e(trans('greet.email')); ?></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                                            <input type="email" class="form-control input-lg" id="aEmail"
+                                                   value="<?php echo e($publisher->email); ?>" placeholder="Email" maxlength="50" name="email" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label id="" for="aWebsite"><?php echo e(trans('greet.Website')); ?></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">http//www.</span>
+                                            <input type="text" class="form-control input-lg" id="aWebsite"
+                                                   value="<?php echo e($publisher->website); ?>" placeholder="website" maxlength="100" name="website" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box-footer">
+                            <p class="text-right">
+                                <button class="btn btn-primary btn-flat" type="submit"><?php echo e(trans('greet.Save')); ?></button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

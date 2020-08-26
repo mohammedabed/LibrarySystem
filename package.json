@@ -1,0 +1,41 @@
+{
+  "private": true,
+  "devDependencies": {
+    "ionicons": "^3.0.0"
+  },
+  "dependencies": {
+    "admin-lte": "^2.3.3",
+    "bootstrap": "^3.3.6",
+    "bootstrap-3-typeahead": "^4.0.1",
+    "bootstrap-datepicker": "^1.6.1",
+    "bootstrap-sass": "^3.0.0",
+    "cross": "^1.0.0",
+    "cross-env": "^5.1.6",
+    "env": "0.0.2",
+    "font-awesome": "^4.6.3",
+    "grunt": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "jquery": "^2.2.4",
+    "laravel-elixir": "^4.0.0",
+    "load-grunt-tasks": "^3.5.0",
+    "lodash": "^4.13.1",
+    "moment": "^2.13.0",
+    "webpack": "^1.13.1"
+  },
+  "name": "library-management-system",
+  "description": "Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.",
+  "version": "0.0.1",
+  "main": "entry.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "webpack --progress --colors --watch",
+    "deploy": "cross-env NODE_ENV=production webpack -p --colors --progress --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+
+  ]
+
+}
